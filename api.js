@@ -1,9 +1,15 @@
 var express = require("express")
 var router = express.Router()
+var imagesClient = require('google-images');
+
+var gClient = new imagesClient('009398540246307978289:iqst39d97we','AIzaSyCj6zGCOthX__AzcGDENssx-5-I5W3XR8c');
+
 
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 var urlDB = [];
 var urlDBIndex = 0;
+
+var searchDB = [];
 
 router.get('/timestamp', function(req, res) {
    res.render('timestamp'); 
@@ -86,6 +92,28 @@ router.get('/shorten/:id', function(req, res) {
     else{
         res.send({error:"Nothing found.!"})
     }
+    
+});
+
+router.get('/imagesearch', function(req, res) {
+   res.render('imagesrc') 
+});
+
+router.get('/imagesearch/latest', function(req, res) {
+    res.send(searchDB);
+});
+
+router.get('/imagesearch/:name',function(req, res) {
+   var offset = req.query.offset || 1;
+   var term = req.params.name;
+   var d = new Date().toISOString();
+   var objToSend = {term:term, date:d};
+   
+   searchDB.push(objToSend);
+   
+   gClient.search(term,{page:offset}).then(function(images){
+      res.json(images); 
+   });
     
 });
 
