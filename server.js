@@ -2,6 +2,14 @@ var express = require('express');
 var app = express();
 
 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
+app.get('/', function(req, res){
+   
+   res.render('index');
+    
+});
 
 app.get('/:id', function(req,res){
     
