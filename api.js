@@ -34,4 +34,17 @@ router.get('/timestamp/:id', function(req,res){
 });
 
 
+router.get('/whoami/', function(req, res) {
+    
+    var objToSend = {};
+    
+    objToSend["ip"] = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    objToSend["language"] = req.headers['accept-language'].split(';')[0].split(',')[0];
+    var software = req.headers['user-agent'].match('[\\(].*?[A-Za-z0-9][\\)]')[0];
+    software = software.slice(1, software.length-1);
+    objToSend["software"] = software;
+    res.send(objToSend);
+});
+
+
 module.exports = router;

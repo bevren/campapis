@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var api = require("./api");
 
-var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
